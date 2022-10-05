@@ -15,7 +15,6 @@ You can refer "docker-compose.yml" file for ssl location.
 <br>
 
 # skill
-- docker
 - docker-compose
 - svelte
 - fiber (golang)
