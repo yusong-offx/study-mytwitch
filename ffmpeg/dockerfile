@@ -1,0 +1,18 @@
+FROM alpine
+
+WORKDIR /video
+RUN apk add ffmpeg
+
+EXPOSE 5000
+
+CMD [ "ffmpeg", "-i", "srt://:5000?mode=listener", \
+"-preset", "ultrafast", \
+"-filter_complex", "[0:v]fps=60,split=3[1080_in][720_in][480_in];[1080_in]scale=-2:1080[1080_out];[720_in]scale=-2:720[720_out];[480_in]scale=-2:480[480_out]",\
+"-map", "[1080_out]", "-map", "[720_out]", "-map", "[480_out]", "-map", "0:a", \
+"-b:v:0", "9000k", "-maxrate:v:0", "9000k", "-bufsize:v:0", "9000k", \
+"-b:v:1", "6500k", "-maxrate:v:1", "6500k", "-bufsize:v:1", "6500k", \
+"-b:v:2", "3000k", "-maxrate:v:2", "3000k", "-bufsize:v:2", "3000k", \
+"-b:a:0", "128k", \
+"-hls_playlist", "1", "-hls_master_name","adaptive.m3u8", \
+"-seg_duration", "1", \
+"adaptive.mpd"]

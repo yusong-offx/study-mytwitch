@@ -1,0 +1,50 @@
+version: "3.9"
+
+networks:
+  mytwitch:
+    driver: bridge
+
+services:
+  mynginx:
+    restart: always
+    build: ./nginx
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - ./share/ssl/letsencrypt:/ssl
+
+  frontend:
+    restart: always
+    build: ./frontend
+
+  main-backend:
+    restart: always
+    build: ./main-backend
+    volumes:
+      - ./share/filestorage:/filestorage
+    depends_on:
+      - database
+
+  encode-server:
+    restart: always
+    build: ./ffmpeg
+    ports:
+      - 5000:5000/udp
+    volumes:
+      - ./share/filestorage/video:/video
+
+  database:
+    restart: always
+    build: ./database
+    volumes:
+      - ./share/postgresql:/var/lib/postgresql/data
+  
+  pgadmin4:
+    restart: always
+    image: dpage/pgadmin4
+    ports: 
+      - 5050:80
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=hssong1024@gmail.com
+      - PGADMIN_DEFAULT_PASSWORD=docker_database

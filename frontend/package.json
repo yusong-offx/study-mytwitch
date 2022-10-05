@@ -1,0 +1,28 @@
+{
+	"name": "sveltekit-test",
+	"version": "0.0.1",
+	"private": true,
+	"scripts": {
+		"dev": "vite dev --port 5174",
+		"build": "vite build",
+		"preview": "vite preview",
+		"test": "playwright test"
+	},
+	"devDependencies": {
+		"@playwright/test": "^1.25.0",
+		"@sveltejs/adapter-node": "next",
+		"@sveltejs/kit": "next",
+		"@types/video.js": "^7.3.48",
+		"svelte": "^3.44.0",
+		"video.js": "^7.20.3",
+		"vite": "^3.1.0"
+	},
+	"type": "module",
+	"dependencies": {
+		"@vime/core": "^5.3.3",
+		"@vime/svelte": "^5.3.3",
+		"dashjs": "^4.4.1",
+		"shaka-player": "^4.2.1",
+		"videojs-shaka": "^1.1.2"
+	}
+}

@@ -1,0 +1,19 @@
+# 1
+FROM golang AS builder
+
+WORKDIR /app
+COPY . /app/
+
+RUN go install
+RUN CGO_ENABLED=0 go build -o main-backend main.go
+
+#2
+FROM alpine
+
+WORKDIR /
+USER root:root
+COPY --from=builder --chown=root:root /app/main-backend /
+
+EXPOSE 8000
+
+CMD ["./main-backend"]
