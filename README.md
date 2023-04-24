@@ -11,7 +11,6 @@ You can refer "docker-compose.yml" file for ssl location.
 - websocket chat
 - login/out & signup (password hashed by bcrypt)
 - reverse proxy by nginx
-- garbage frontend
 <br>
 
 # skill
